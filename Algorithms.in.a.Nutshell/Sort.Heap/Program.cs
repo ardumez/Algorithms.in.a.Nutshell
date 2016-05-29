@@ -10,42 +10,66 @@ namespace Sort.Heap
     {
         static void Main(string[] args)
         {
-
-            int[] values = new int[] { 15, 9, 8, 1, 4, 11, 7, 12, 13, 6, 5, 3, 16, 2, 10 };
-
-            BuildHeap(values);
-
-            Console.WriteLine("Hello World!");
-            PrintHeap(values);
+            SortHeapV1 sort = new SortHeapV1();
+ 
+            Console.ReadLine();
         }
+    }
 
-        static void BuildHeap(int[] values)
+
+    public class SortHeapV1
+    {
+        int[] values;
+
+        public SortHeapV1()
         {
-            int firstParent = values.Length / 2;
+            values = new int[] { 15, 9, 8, 1, 4, 11, 7, 12, 13, 6, 5, 3, 16, 2, 10 };
 
-            int leftChild = firstParent * 2 + 1;
-            int rightChild = firstParent * 2 + 2;
-
-            Console.Write(values[leftChild - 1]);
-
-        }
-
-        static void PrintHeap(int[] values)
-        {
-            double level = Math.Log((double)values.Length, 2);
-
-            int cursor = 0;
-
-            for (int i = 0; i < level; i++)
+            for (int i = 0; i < values.Length; i++)
             {
-                for (int j = (int)Math.Pow(2, i); j < Math.Pow(2, i + 1); j++)
-                {
-                    Console.Write(values[cursor] + " ");
-                    cursor++;
-                }
-
-                Console.WriteLine("level : " + (int)Math.Pow(2, i));
+                BuildHeap(i);
             }
+        }
+
+        void BuildHeap(int alreadySort)
+        {
+            int sizeSort = values.Length - alreadySort;
+            int firstParent = (sizeSort / 2);
+
+            for (int i = firstParent; i > 0; i--)
+            {
+                Sort(i, alreadySort);
+            }
+        }
+
+        void Sort(int i, int alreadySort)
+        {
+            int leftChild = (i * 2);
+            int rightChild = (i * 2 + 1);
+
+            if (leftChild <= (values.Length - alreadySort))
+            {
+                if (values[i + alreadySort - 1] < values[leftChild + alreadySort - 1])
+                {
+                    Swap(leftChild + alreadySort - 1, i + alreadySort - 1);
+                    Sort(leftChild, alreadySort);
+                }
+            }
+            if (rightChild <= values.Length - alreadySort)
+            {
+                if (values[i + alreadySort - 1] < values[rightChild + alreadySort - 1])
+                {
+                    Swap(rightChild + alreadySort - 1, i + alreadySort - 1);
+                    Sort(rightChild, alreadySort);
+                }
+            }
+        }
+
+        void Swap(int i, int j)
+        {
+            int val = values[i];
+            values[i] = values[j];
+            values[j] = val;
         }
     }
 }
