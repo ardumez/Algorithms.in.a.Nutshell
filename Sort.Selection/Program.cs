@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Azure.WebJobs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,13 @@ namespace Sort.Selection
     class Program
     {
         static void Main(string[] args)
+        {
+
+            JobHost host = new JobHost();
+            host.RunAndBlock();
+        }
+
+        public static void SortSelection()
         {
             int[] values = new int[] { 15, 9, 8, 1, 4, 11, 7, 12, 13, 6, 5, 3, 16, 2, 10, 14 };
 
